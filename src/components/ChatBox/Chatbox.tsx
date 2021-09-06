@@ -6,55 +6,36 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
-import { makeStyles } from "@material-ui/core/styles";
+import React, { ReactFragment, ReactElement, useState, useEffect } from "react";
 
-import React, { ReactFragment, ReactElement } from "react";
+import { InteractionOptionType, InteractionType } from "../../types";
+
+import ListItemComponent from "../ListItem";
+
+import { useStyles } from "./styles";
 
 import { Props } from "./types";
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-  chatSection: {
-    border: "1px solid dark-gray",
-    width: "100%",
-    height: "90vh",
-  },
-  headBG: {
-    backgroundColor: "#e0e0e0",
-  },
-  borderRight500: {
-    borderRight: "1px solid #e0e0e0",
-  },
-  messageArea: {
-    height: "70vh",
-    overflowY: "auto",
-  },
-  messageStyles: {
-    display: "flex",
-    justifyContent: "center",
-    border: "1px solid gray",
-    boxShadow: "1px 1px 0 gray",
-    borderRadius: "4px",
-    padding: "0.5rem 1rem",
-  },
-  leftAlignedGrid: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-  },
-  rightAlignedGrid: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-  },
-});
-
 const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
+  const [nextId, setNextId] = useState<number | false>(100);
+  const [itemsToDisplay, setItemsToDisplay] = useState<InteractionType[]>([]);
   const classes = useStyles();
+
+  const handleSelection = (selection: number | false) => {
+    setNextId(selection);
+  };
+
+  useEffect(() => {
+    console.log("flow", flow);
+    console.log("nextId", nextId);
+    const nextItem = flow?.find((el: InteractionType) => el.id === nextId);
+    nextItem &&
+      setItemsToDisplay((prev: InteractionType[]) => [...prev, nextItem]);
+  }, [nextId, flow]);
+
+  useEffect(() => {
+    console.log("itemsToDisplay", itemsToDisplay);
+  }, [itemsToDisplay]);
 
   return flow ? (
     <>
