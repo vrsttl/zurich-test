@@ -17,9 +17,6 @@ function App(): ReactElement<HTMLDivElement> {
     };
     getFlow();
   }, []);
-  useEffect(() => {
-    console.log("userFlow", userFlow);
-  }, [userFlow]);
   return (
     <div className="App">
       <header className="App-header">

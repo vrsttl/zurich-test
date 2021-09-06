@@ -39,4 +39,10 @@ export const useStyles = makeStyles({
     justifyContent: "flex-end",
     alignItems: "flex-end",
   },
+  disabledButton: {
+    disabled: {
+      opacity: 1,
+      backgroundColor: "tomato",
+    },
+  },
 });

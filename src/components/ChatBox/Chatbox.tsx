@@ -49,54 +49,15 @@ const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
       <Grid container component={Paper} className={classes.chatSection}>
         <Grid item xs={12}>
           <List className={classes.messageArea}>
-            <ListItem key="1">
-              <Grid className={classes.rightAlignedGrid} container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    className={classes.messageStyles}
-                    primary="Chatbot logging in"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText
-                    className={classes.messageStyles}
-                    secondary="09:30"
-                  />
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="2">
-              <Grid className={classes.leftAlignedGrid} container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    className={classes.messageStyles}
-                    primary="Persisting selection"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText
-                    className={classes.messageStyles}
-                    secondary="09:31"
-                  />
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="3">
-              <Grid className={classes.rightAlignedGrid} container>
-                <Grid item xs={3}>
-                  <ListItemText
-                    className={classes.messageStyles}
-                    primary="Next option after selection"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={1}>
-                  <ListItemText
-                    className={classes.messageStyles}
-                    secondary="10:30"
-                  />
-                </Grid>
-              </Grid>
-            </ListItem>
+            {itemsToDisplay.map(({ id, text, valueOptions }) => (
+              <ListItemComponent
+                key={id}
+                text={text}
+                align="end"
+                buttonOptions={valueOptions}
+                handleSelection={handleSelection}
+              />
+            ))}
           </List>
         </Grid>
       </Grid>
