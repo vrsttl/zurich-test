@@ -1,3 +1,4 @@
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -7,7 +8,9 @@ import Typography from "@material-ui/core/Typography";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import React, { ReactFragment } from "react";
+import React, { ReactFragment, ReactElement } from "react";
+
+import { Props } from "./types";
 
 const useStyles = makeStyles({
   table: {
@@ -30,12 +33,26 @@ const useStyles = makeStyles({
   },
 });
 
-const Chatbox = (): React.ReactElement<ReactFragment> => {
+const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
   const classes = useStyles();
-  const leftAlignedStyles = { display: "flex", justifyContent: "flex-start" };
-  const rightAlignedStyles = { display: "flex", justifyContent: "flex-end" };
+  const leftAlignedMessageStyles = {
+    display: "flex",
+    justifyContent: "center",
+    border: "1px solid gray",
+    boxShadow: "1px 1px 0 gray",
+    borderRadius: "4px",
+    padding: "0.5rem 1rem",
+  };
+  const rightAlignedMessageStyles = {
+    display: "flex",
+    justifyContent: "center",
+    border: "1px solid gray",
+    boxShadow: "1px 1px 0 gray",
+    borderRadius: "4px",
+    padding: "0.5rem 1rem",
+  };
 
-  return (
+  return flow ? (
     <>
       <Grid container>
         <Grid item xs={12}>
@@ -48,41 +65,74 @@ const Chatbox = (): React.ReactElement<ReactFragment> => {
         <Grid item xs={12}>
           <List className={classes.messageArea}>
             <ListItem key="1">
-              <Grid container>
+              <Grid
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                  alignItems: "flex-end",
+                }}
+                container
+              >
                 <Grid item xs={12}>
                   <ListItemText
-                    style={rightAlignedStyles}
+                    style={rightAlignedMessageStyles}
                     primary="Chatbot logging in"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <ListItemText style={rightAlignedStyles} secondary="09:30" />
+                  <ListItemText
+                    style={rightAlignedMessageStyles}
+                    secondary="09:30"
+                  />
                 </Grid>
               </Grid>
             </ListItem>
             <ListItem key="2">
-              <Grid container>
+              <Grid
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                  alignItems: "flex-start",
+                }}
+                container
+              >
                 <Grid item xs={12}>
                   <ListItemText
-                    style={leftAlignedStyles}
+                    style={leftAlignedMessageStyles}
                     primary="Persisting selection"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <ListItemText style={rightAlignedStyles} secondary="09:31" />
+                  <ListItemText
+                    style={rightAlignedMessageStyles}
+                    secondary="09:31"
+                  />
                 </Grid>
               </Grid>
             </ListItem>
             <ListItem key="3">
-              <Grid container>
-                <Grid item xs={12}>
+              <Grid
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                  alignItems: "flex-end",
+                }}
+                container
+              >
+                <Grid item xs={3}>
                   <ListItemText
-                    style={rightAlignedStyles}
+                    style={rightAlignedMessageStyles}
                     primary="Next option after selection"
                   ></ListItemText>
                 </Grid>
-                <Grid item xs={12}>
-                  <ListItemText style={rightAlignedStyles} secondary="10:30" />
+                <Grid item xs={1}>
+                  <ListItemText
+                    style={rightAlignedMessageStyles}
+                    secondary="10:30"
+                  />
                 </Grid>
               </Grid>
             </ListItem>
@@ -90,6 +140,16 @@ const Chatbox = (): React.ReactElement<ReactFragment> => {
         </Grid>
       </Grid>
     </>
+  ) : (
+    <Grid
+      justifyContent="center"
+      alignItems="center"
+      container
+      component={Paper}
+      className={classes.chatSection}
+    >
+      <CircularProgress />
+    </Grid>
   );
 };
 

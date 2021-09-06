@@ -23,7 +23,7 @@ function App(): ReactElement<HTMLDivElement> {
   return (
     <div className="App">
       <header className="App-header">
-        <Chatbox />
+        <Chatbox flow={userFlow} />
       </header>
     </div>
   );
