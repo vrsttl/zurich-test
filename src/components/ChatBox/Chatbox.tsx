@@ -31,26 +31,30 @@ const useStyles = makeStyles({
     height: "70vh",
     overflowY: "auto",
   },
+  messageStyles: {
+    display: "flex",
+    justifyContent: "center",
+    border: "1px solid gray",
+    boxShadow: "1px 1px 0 gray",
+    borderRadius: "4px",
+    padding: "0.5rem 1rem",
+  },
+  leftAlignedGrid: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  },
+  rightAlignedGrid: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+  },
 });
 
 const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
   const classes = useStyles();
-  const leftAlignedMessageStyles = {
-    display: "flex",
-    justifyContent: "center",
-    border: "1px solid gray",
-    boxShadow: "1px 1px 0 gray",
-    borderRadius: "4px",
-    padding: "0.5rem 1rem",
-  };
-  const rightAlignedMessageStyles = {
-    display: "flex",
-    justifyContent: "center",
-    border: "1px solid gray",
-    boxShadow: "1px 1px 0 gray",
-    borderRadius: "4px",
-    padding: "0.5rem 1rem",
-  };
 
   return flow ? (
     <>
@@ -65,72 +69,48 @@ const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
         <Grid item xs={12}>
           <List className={classes.messageArea}>
             <ListItem key="1">
-              <Grid
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
-                }}
-                container
-              >
+              <Grid className={classes.rightAlignedGrid} container>
                 <Grid item xs={12}>
                   <ListItemText
-                    style={rightAlignedMessageStyles}
+                    className={classes.messageStyles}
                     primary="Chatbot logging in"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <ListItemText
-                    style={rightAlignedMessageStyles}
+                    className={classes.messageStyles}
                     secondary="09:30"
                   />
                 </Grid>
               </Grid>
             </ListItem>
             <ListItem key="2">
-              <Grid
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-start",
-                  alignItems: "flex-start",
-                }}
-                container
-              >
+              <Grid className={classes.leftAlignedGrid} container>
                 <Grid item xs={12}>
                   <ListItemText
-                    style={leftAlignedMessageStyles}
+                    className={classes.messageStyles}
                     primary="Persisting selection"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <ListItemText
-                    style={rightAlignedMessageStyles}
+                    className={classes.messageStyles}
                     secondary="09:31"
                   />
                 </Grid>
               </Grid>
             </ListItem>
             <ListItem key="3">
-              <Grid
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
-                }}
-                container
-              >
+              <Grid className={classes.rightAlignedGrid} container>
                 <Grid item xs={3}>
                   <ListItemText
-                    style={rightAlignedMessageStyles}
+                    className={classes.messageStyles}
                     primary="Next option after selection"
                   ></ListItemText>
                 </Grid>
                 <Grid item xs={1}>
                   <ListItemText
-                    style={rightAlignedMessageStyles}
+                    className={classes.messageStyles}
                     secondary="10:30"
                   />
                 </Grid>
