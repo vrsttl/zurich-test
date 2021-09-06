@@ -1,7 +1,6 @@
 import { InteractionOptionType } from "../../types";
 
 export type Props = {
-  key: number;
   text: string;
   align: string;
   buttonOptions: InteractionOptionType[];

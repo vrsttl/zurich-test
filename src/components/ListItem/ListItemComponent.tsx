@@ -9,12 +9,11 @@ import { useStyles } from "../ChatBox/styles";
 import { Props } from "./types";
 
 export default ({
-  key,
   text,
   align,
   buttonOptions,
   handleSelection,
-}: Props) => {
+}: Props): React.ReactElement<HTMLLIElement> => {
   const classes = useStyles();
   const [selected, setSelected] = useState("");
 
@@ -29,8 +28,9 @@ export default ({
     }
     return "primary";
   };
+
   return (
-    <ListItem key={key}>
+    <ListItem>
       <Grid
         className={
           align === "end" ? classes.rightAlignedGrid : classes.leftAlignedGrid
