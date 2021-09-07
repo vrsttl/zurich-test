@@ -3,17 +3,21 @@ export type InteractionType = {
   name: string;
   text: string;
   uiType: "button"; // e.g.: | "input" | "div" | "span"; etc. where applicable
-  valueType: "boolean" | "string" | "number";
+  valueType: ValueType;
   valueOptions: InteractionOptionType[];
 };
 
 export type InteractionOptionType = {
-  nextId: number | false;
-  value: boolean | string | number;
+  nextId: IdType;
+  value: ValueType;
   text: string;
 };
 
 export type DBItemType = {
   name: string;
-  value?: string | number | boolean;
+  value?: ValueType;
 };
+
+export type ValueType = string | number | boolean;
+
+export type IdType = number | false;

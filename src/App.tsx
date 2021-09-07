@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { ReactElement, useEffect, useState } from "react";
 
-import Chatbox from "./components/ChatBox";
+import Chatbox from "components/ChatBox";
+
+import { InteractionType } from "types";
 
 import { API_URL } from "./constants";
-
-import { InteractionType } from "./types";
 
 function App(): ReactElement<HTMLDivElement> {
   const [userFlow, setUserFlow] = useState<InteractionType[] | null>(null);

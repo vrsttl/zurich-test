@@ -12,7 +12,7 @@ import React, { ReactFragment, ReactElement, useState, useEffect } from "react";
 
 import ListItemComponent from "components/ListItem";
 
-import { DBItemType, InteractionType } from "types";
+import { DBItemType, InteractionType, IdType, ValueType } from "types";
 
 import { PUT_RECORDS_URL } from "../../constants";
 
@@ -21,7 +21,7 @@ import { useStyles } from "./styles";
 import { Props } from "./types";
 
 const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
-  const [nextId, setNextId] = useState<number | false>(100);
+  const [nextId, setNextId] = useState<IdType>(100);
   const [itemsToDisplay, setItemsToDisplay] = useState<InteractionType[]>([]);
   const [selectionToSend, setSelectionToSend] = useState<DBItemType[]>([]);
   const [finalizedSelection, setFinalizedSelection] = useState<DBItemType[]>(
@@ -30,10 +30,28 @@ const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
   const [isFlowFinished, setIsFlowFinished] = useState(false);
   const classes = useStyles();
 
+  useEffect(() => {
+    const nextItem = flow?.find((el: InteractionType) => el.id === nextId);
+    if (nextItem) {
+      setItemsToDisplay((prev: InteractionType[]) => [...prev, nextItem]);
+      setSelectionToSend((prev: DBItemType[]) => [
+        ...prev,
+        { name: nextItem.name, value: undefined },
+      ]);
+    }
+  }, [nextId, flow]);
+
+  useEffect(() => {
+    if (nextId === false) {
+      setIsFlowFinished(true);
+      axios.put(PUT_RECORDS_URL, finalizedSelection);
+    }
+  }, [finalizedSelection, nextId]);
+
   const handleSelection = (
-    currentId: number | false,
-    nextId: number | false,
-    value: string | number | boolean
+    currentId: IdType,
+    nextId: IdType,
+    value: ValueType
   ) => {
     const currentIdData = flow?.find(
       (el: InteractionType) => el.id === currentId
@@ -55,24 +73,6 @@ const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
     setFinalizedSelection([]);
     setIsFlowFinished(false);
   };
-
-  useEffect(() => {
-    const nextItem = flow?.find((el: InteractionType) => el.id === nextId);
-    if (nextItem) {
-      setItemsToDisplay((prev: InteractionType[]) => [...prev, nextItem]);
-      setSelectionToSend((prev: DBItemType[]) => [
-        ...prev,
-        { name: nextItem.name, value: undefined },
-      ]);
-    }
-  }, [nextId, flow]);
-
-  useEffect(() => {
-    if (nextId === false) {
-      setIsFlowFinished(true);
-      axios.put(PUT_RECORDS_URL, finalizedSelection);
-    }
-  }, [finalizedSelection, nextId]);
 
   return flow ? (
     <>

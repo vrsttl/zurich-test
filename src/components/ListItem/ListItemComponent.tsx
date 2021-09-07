@@ -6,7 +6,10 @@ import Slide from "@material-ui/core/Slide";
 
 import React, { useState } from "react";
 
-import { useStyles } from "../ChatBox/styles";
+import { useStyles } from "components/ChatBox/styles";
+
+import { IdType, ValueType } from "types";
+
 import { Props } from "./types";
 
 export default ({
@@ -16,12 +19,12 @@ export default ({
   handleSelection,
 }: Props): React.ReactElement<HTMLLIElement> => {
   const classes = useStyles();
-  const [selected, setSelected] = useState<string | number | boolean>("");
+  const [selected, setSelected] = useState<ValueType>("");
 
   const clickHandler = (
-    currentId: number | false,
-    nextId: number | false,
-    selection: string | number | boolean
+    currentId: IdType,
+    nextId: IdType,
+    selection: ValueType
   ) => {
     handleSelection(currentId, nextId, selection);
     setSelected(selection);
