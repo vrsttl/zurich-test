@@ -44,7 +44,7 @@ const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
   useEffect(() => {
     if (nextId === false) {
       setIsFlowFinished(true);
-      axios.put(PUT_RECORDS_URL, finalizedSelection);
+      axios.post(PUT_RECORDS_URL, finalizedSelection);
     }
   }, [finalizedSelection, nextId]);
 
