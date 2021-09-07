@@ -29,13 +29,13 @@ export const useStyles = makeStyles({
   },
   leftAlignedGrid: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "flex-start",
   },
   rightAlignedGrid: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "flex-end",
   },

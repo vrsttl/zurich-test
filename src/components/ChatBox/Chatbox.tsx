@@ -1,14 +1,12 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
 import React, { ReactFragment, ReactElement, useState, useEffect } from "react";
 
-import { InteractionOptionType, InteractionType } from "../../types";
+import { InteractionType } from "../../types";
 
 import ListItemComponent from "../ListItem";
 
@@ -26,16 +24,10 @@ const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
   };
 
   useEffect(() => {
-    console.log("flow", flow);
-    console.log("nextId", nextId);
     const nextItem = flow?.find((el: InteractionType) => el.id === nextId);
     nextItem &&
       setItemsToDisplay((prev: InteractionType[]) => [...prev, nextItem]);
   }, [nextId, flow]);
-
-  useEffect(() => {
-    console.log("itemsToDisplay", itemsToDisplay);
-  }, [itemsToDisplay]);
 
   return flow ? (
     <>
@@ -53,7 +45,6 @@ const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
               <ListItemComponent
                 key={id}
                 text={text}
-                align="end"
                 buttonOptions={valueOptions}
                 handleSelection={handleSelection}
               />

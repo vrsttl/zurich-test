@@ -2,6 +2,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Slide from "@material-ui/core/Slide";
 
 import React, { useState } from "react";
 
@@ -10,7 +11,6 @@ import { Props } from "./types";
 
 export default ({
   text,
-  align,
   buttonOptions,
   handleSelection,
 }: Props): React.ReactElement<HTMLLIElement> => {
@@ -31,34 +31,43 @@ export default ({
 
   return (
     <ListItem>
-      <Grid
-        className={
-          align === "end" ? classes.rightAlignedGrid : classes.leftAlignedGrid
-        }
-        container
-      >
-        <Grid item xs={12}>
-          <ListItemText className={classes.messageStyles} primary={text} />
-        </Grid>
-        <Grid item xs={12}>
+      <Grid container>
+        <Slide in direction="right">
+          <Grid item xs={3}>
+            <ListItemText className={classes.messageStyles} primary={text} />
+          </Grid>
+        </Slide>
+        <Grid
+          container
+          direction="row-reverse"
+          className={
+            selected ? classes.rightAlignedGrid : classes.leftAlignedGrid
+          }
+          item
+          xs={12}
+        >
           {buttonOptions.map(
             ({ nextId, text }, index) =>
               (!selected || selected === text) && (
-                <Button
-                  key={String(`${nextId}-${Math.random()}`)}
-                  variant="contained"
-                  color={persistSelectionDisplay(index)}
-                  onClick={(e: React.SyntheticEvent<any>) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    !Boolean(selected)
-                      ? clickHandler(nextId, text)
-                      : () => null;
-                  }}
-                  style={{ cursor: !Boolean(selected) ? "pointer" : "initial" }}
-                >
-                  {text}
-                </Button>
+                <Slide in direction="left">
+                  <Button
+                    key={String(`${nextId}-${Math.random()}`)}
+                    variant="contained"
+                    color={persistSelectionDisplay(index)}
+                    onClick={(e: React.SyntheticEvent<HTMLButtonElement>) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      !Boolean(selected)
+                        ? clickHandler(nextId, text)
+                        : () => null;
+                    }}
+                    style={{
+                      cursor: !Boolean(selected) ? "pointer" : "initial",
+                    }}
+                  >
+                    {text}
+                  </Button>
+                </Slide>
               )
           )}
         </Grid>
