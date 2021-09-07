@@ -12,3 +12,8 @@ export type InteractionOptionType = {
   value: boolean | string | number;
   text: string;
 };
+
+export type DBItemType = {
+  name: string;
+  value?: string | number | boolean;
+};

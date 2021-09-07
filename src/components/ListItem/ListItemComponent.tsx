@@ -10,20 +10,25 @@ import { useStyles } from "../ChatBox/styles";
 import { Props } from "./types";
 
 export default ({
+  id,
   text,
   buttonOptions,
   handleSelection,
 }: Props): React.ReactElement<HTMLLIElement> => {
   const classes = useStyles();
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState<string | number | boolean>("");
 
-  const clickHandler = (nextId: number | false, selection: string) => {
-    handleSelection(nextId);
+  const clickHandler = (
+    currentId: number | false,
+    nextId: number | false,
+    selection: string | number | boolean
+  ) => {
+    handleSelection(currentId, nextId, selection);
     setSelected(selection);
   };
 
   const persistSelectionDisplay = (index: number): "primary" | "default" => {
-    if (!selected) {
+    if (selected === "") {
       return !index ? "primary" : "default";
     }
     return "primary";
@@ -33,7 +38,7 @@ export default ({
     <ListItem>
       <Grid container>
         <Slide in direction="right">
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <ListItemText className={classes.messageStyles} primary={text} />
           </Grid>
         </Slide>
@@ -41,31 +46,35 @@ export default ({
           container
           direction="row-reverse"
           className={
-            selected ? classes.rightAlignedGrid : classes.leftAlignedGrid
+            selected !== "" ? classes.rightAlignedGrid : classes.leftAlignedGrid
           }
           item
           xs={12}
         >
           {buttonOptions.map(
-            ({ nextId, text }, index) =>
-              (!selected || selected === text) && (
-                <Slide in direction="left">
+            ({ nextId, text: label, value }, index) =>
+              (selected === "" || selected === value) && (
+                <Slide
+                  in
+                  direction="left"
+                  key={String(`${nextId}-${Math.random()}`)}
+                >
                   <Button
-                    key={String(`${nextId}-${Math.random()}`)}
                     variant="contained"
+                    className={classes.buttonStyles}
                     color={persistSelectionDisplay(index)}
                     onClick={(e: React.SyntheticEvent<HTMLButtonElement>) => {
                       e.stopPropagation();
                       e.preventDefault();
-                      !Boolean(selected)
-                        ? clickHandler(nextId, text)
+                      selected === ""
+                        ? clickHandler(id, nextId, value)
                         : () => null;
                     }}
                     style={{
-                      cursor: !Boolean(selected) ? "pointer" : "initial",
+                      cursor: selected === "" ? "pointer" : "initial",
                     }}
                   >
-                    {text}
+                    {label}
                   </Button>
                 </Slide>
               )
