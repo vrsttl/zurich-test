@@ -52,7 +52,7 @@ export function postDataFlowStart(): FetchActions {
   };
 }
 
-export function postDataFlowSuccess(payload: string): FetchActions {
+export function postDataFlowSuccess(payload: 204 | 400): FetchActions {
   return {
     type: TYPES.POST_DATA_SUCCESS,
     payload,

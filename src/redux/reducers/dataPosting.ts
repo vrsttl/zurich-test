@@ -1,37 +1,36 @@
 import { FetchActions } from "redux/fetchDataActions/actionTypes";
 
-import { DataStateType } from "../../types";
+import { PostingStateType } from "../../types";
 
 import * as TYPES from "../actionTypes";
 
-export const initialState: DataStateType = {
+export const initialState: PostingStateType = {
   isLoading: false,
-  result: [],
+  result: undefined,
   error: undefined,
 };
 
-const dataFetching = (
+const dataPosting = (
   state = initialState,
   action: FetchActions
-): DataStateType => {
+): PostingStateType => {
   switch (action.type) {
-    case TYPES.FETCH_DATA_START:
+    case TYPES.POST_DATA_START:
       return {
         ...state,
         isLoading: true,
-        result: [],
       };
-    case TYPES.FETCH_DATA_SUCCESS:
+    case TYPES.POST_DATA_SUCCESS:
       return {
         ...state,
         result: action.payload,
       };
-    case TYPES.FETCH_DATA_ERROR:
+    case TYPES.POST_DATA_ERROR:
       return {
         ...state,
         error: action.payload,
       };
-    case TYPES.FETCH_DATA_FINISH:
+    case TYPES.POST_DATA_FINISH:
       return {
         ...state,
         isLoading: false,
@@ -42,4 +41,4 @@ const dataFetching = (
   }
 };
 
-export default dataFetching;
+export default dataPosting;

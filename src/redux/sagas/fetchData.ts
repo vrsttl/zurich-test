@@ -35,7 +35,7 @@ export function* postData({
   try {
     yield put(postDataFlowStart());
     const { status } = yield call(() => axios.post(url, data));
-    yield put(postDataFlowSuccess(String(status)));
+    yield put(postDataFlowSuccess(status));
   } catch (error) {
     yield put(postDataFlowError(error));
   } finally {

@@ -1,8 +1,3 @@
-export type ActionType<T> = {
-  type: string;
-  payload: T;
-};
-
 export type ApplicationState = {
   dataFetching: DataStateType;
 };
@@ -30,7 +25,13 @@ export type DBItemType = {
 export type DataStateType = {
   isLoading: boolean;
   result: InteractionType[];
-  error: boolean;
+  error: unknown;
+};
+
+export type PostingStateType = {
+  isLoading: boolean;
+  result?: 204 | 400;
+  error: unknown;
 };
 
 export type ValueType = string | number | boolean;
