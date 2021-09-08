@@ -16,7 +16,7 @@ EXTEND_ESLINT=true
 ```
 for `v2.0` branch please add
 ```
-NODE_ENV="development"
+NODE_ENV=development
 ```
 for a complete make-believe experience, though the app will work as intended also if you don't :)
 
