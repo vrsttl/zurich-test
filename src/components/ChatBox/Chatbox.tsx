@@ -6,11 +6,13 @@ import Paper from "@material-ui/core/Paper";
 import Slide from "@material-ui/core/Slide";
 import Typography from "@material-ui/core/Typography";
 
-import axios from "axios";
-
 import React, { ReactFragment, ReactElement, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import ListItemComponent from "components/ListItem";
+
+import { postDataRequest } from "redux/fetchDataActions/actions";
+import { flowDataLoading } from "redux/selectors/fetchDataSelectors";
 
 import { DBItemType, InteractionType, IdType, ValueType } from "types";
 
@@ -21,6 +23,8 @@ import { useStyles } from "./styles";
 import { Props } from "./types";
 
 const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(flowDataLoading);
   const [nextId, setNextId] = useState<IdType>(100);
   const [itemsToDisplay, setItemsToDisplay] = useState<InteractionType[]>([]);
   const [selectionToSend, setSelectionToSend] = useState<DBItemType[]>([]);
@@ -44,9 +48,11 @@ const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
   useEffect(() => {
     if (nextId === false) {
       setIsFlowFinished(true);
-      axios.post(PUT_RECORDS_URL, finalizedSelection);
+      dispatch(
+        postDataRequest({ url: PUT_RECORDS_URL, data: finalizedSelection })
+      );
     }
-  }, [finalizedSelection, nextId]);
+  }, [finalizedSelection, nextId, dispatch]);
 
   const handleSelection = (
     currentId: IdType,
@@ -74,7 +80,7 @@ const Chatbox = ({ flow }: Props): ReactElement<ReactFragment> => {
     setIsFlowFinished(false);
   };
 
-  return flow ? (
+  return !isLoading ? (
     <>
       <Grid container>
         <Grid item xs={12}>

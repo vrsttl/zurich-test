@@ -1,3 +1,12 @@
+export type ActionType<T> = {
+  type: string;
+  payload: T;
+};
+
+export type ApplicationState = {
+  dataFetching: DataStateType;
+};
+
 export type InteractionType = {
   id: number;
   name: string;
@@ -16,6 +25,12 @@ export type InteractionOptionType = {
 export type DBItemType = {
   name: string;
   value?: ValueType;
+};
+
+export type DataStateType = {
+  isLoading: boolean;
+  result: InteractionType[];
+  error: boolean;
 };
 
 export type ValueType = string | number | boolean;
