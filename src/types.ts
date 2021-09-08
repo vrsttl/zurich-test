@@ -1,5 +1,6 @@
 export type ApplicationState = {
   dataFetching: DataStateType;
+  dataPosting: PostingStateType;
 };
 
 export type InteractionType = {
